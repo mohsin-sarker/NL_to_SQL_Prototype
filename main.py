@@ -1,0 +1,1 @@
+# Main.py is the entry point of Prototype Applicaton NL2SQL
