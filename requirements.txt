@@ -1,4 +1,5 @@
 streamlit
+bcrypt
 openai
 pandas
 faker
