@@ -66,7 +66,7 @@ if st.session_state.show_register:
     register_tab, = st.tabs(['📝 Register Here!'])
     with register_tab:
         st.title('Register')
-        first_name = st.text_input('Enter Your First Name:', key='firt_name')
+        first_name = st.text_input('Enter Your First Name:', key='first_name')
         last_name = st.text_input('Enter Your Last Name:', key='last_name')
         username = st.text_input('New Username:', key='reg_user')
         password = st.text_input('New Password:', type='password', key='reg_pass')
