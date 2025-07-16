@@ -1,5 +1,6 @@
 # This is the main content page for Prototype Applicaton NL2SQL
 import streamlit as st
+from backend.auth import register_user, login_user, show_users
 
 # --------------- Add Home Button ---------------
 # Create a Home button at the top for refresh and go back to default page.
@@ -23,6 +24,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+
 # -------------- Add Home Page Title -------------
 st.title('Natural Language to SQL Analytics')
 
@@ -42,6 +44,15 @@ st.sidebar.markdown("""
 🟢 **Your data is used for academic analysis only.**
 """)
 
+
+# --------- For Showing All Users -------------
+if st.sidebar.button("Show All Registered Users (Debug)"):
+    users = show_users()
+    st.sidebar.write("### Registered Users")
+    for user in users:
+        st.sidebar.write(f"ID: {user[0]}, Name: {user[1]} {user[2]}, Username: {user[3]}")
+
+
 # ------------ Declare Session State --------------
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
@@ -60,10 +71,11 @@ if st.session_state.show_register:
         username = st.text_input('New Username:', key='reg_user')
         password = st.text_input('New Password:', type='password', key='reg_pass')
         if st.button('Register'):
-            # Need backend function code to store user registration into database
-            # If users are successfully registered
-            st.success('You have been successfully registered! Please Login')
-            st.session_state.show_register = False
+            if register_user(first_name, last_name, username, password):
+                st.success('You have been successfully registered! Please Login')
+                st.session_state.show_register = False
+            else:
+                st.error('⚠️ Username already exists.')
             
         if st.button('Back to Login'):
             st.session_state.show_register = False
@@ -77,6 +89,15 @@ elif not st.session_state.logged_in:
         username = st.text_input('Username', key='login_user')
         password = st.text_input('Password', type='password', key='login_pass')
         if st.button('Login'):
-            st.session_state.logged_in = True
+            if login_user(username, password):
+                st.session_state.logged_in = True
+                st.session_state.username = username
+                users = show_users()
+                for user in users:
+                    if username == user[3]:
+                        st.success(f'Welcome {user[1]}')
+            else:
+                st.error("❌ Invalid credentials.")
+                
         if st.button('New Register'):
             st.session_state.show_register = True
