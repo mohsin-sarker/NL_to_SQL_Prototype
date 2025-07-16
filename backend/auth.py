@@ -31,19 +31,16 @@ def login_user(username, password):
     cursor = conn.cursor()
     
     try:
-        cursor.execute("SELECT password FROM users WHERE username = ?", (username,))
+        cursor.execute("SELECT first_name, password FROM users WHERE username = ?", (username,))
         result = cursor.fetchone()
         if result:
-            hashed_pw = result[0]
+            fname, hashed_pw = result
             if verify_password(password, hashed_pw):
-                return True
-            else:
-                return False
-        else:
-            return False
+                return fname
+            
     except Exception as e:
-        print(f"Error has been happend during varify user: {e}")
-        return False
+        print(f"Ops! there is a login error: {e}")
+
     finally:
         if conn:
             conn.close()

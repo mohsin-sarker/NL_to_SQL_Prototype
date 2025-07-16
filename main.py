@@ -1,16 +1,19 @@
-# This is the main content page for Prototype Applicaton NL2SQL
+# This is the main entrance for Prototype Applicaton: NL2SQL
 import streamlit as st
-from backend.auth import register_user, login_user, show_users
+from views.login_view import show_login
+from views.register_view import show_register
+from views.deshboard_view import show_deshboard
+from utils.reset_sesssion import reset_session
+from utils.prototype_info import prototype_info
+
 
 # --------------- Add Home Button ---------------
 # Create a Home button at the top for refresh and go back to default page.
-cols = st.columns([1, 8])
-with cols[0]:
+nav, main = st.columns([1, 8])
+with nav:
     if st.button('🏠 Home'):
         # Reset to default state
-        st.session_state.logged_in = False
-        st.session_state.show_register = False
-        st.session_state.username = ''
+        reset_session()
 
 # Add markdown for Home button to keep it at the top.
 st.markdown("""
@@ -29,30 +32,6 @@ st.markdown("""
 st.title('Natural Language to SQL Analytics')
 
 
-# ---------- ADD SIDEBAR INFO ----------
-st.sidebar.title('🧭 Prototype Info')
-st.sidebar.markdown("""
-**Welcome!**
-
-- This is a research prototype for translating **natural language into SQL**.
-- Please **register first** if you don't have an account.
-- After logging in, you can:
-    - Generate SQL queries.
-    - Save and run queries.
-    - Provide feedback.
-
-🟢 **Your data is used for academic analysis only.**
-""")
-
-
-# --------- For Showing All Users -------------
-if st.sidebar.button("Show All Registered Users (Debug)"):
-    users = show_users()
-    st.sidebar.write("### Registered Users")
-    for user in users:
-        st.sidebar.write(f"ID: {user[0]}, Name: {user[1]} {user[2]}, Username: {user[3]}")
-
-
 # ------------ Declare Session State --------------
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
@@ -60,44 +39,15 @@ if 'logged_in' not in st.session_state:
 
 if 'show_register' not in st.session_state:
     st.session_state.show_register = False
-    
-# ----------- Show Register Tab -------------
-if st.session_state.show_register:
-    register_tab, = st.tabs(['📝 Register Here!'])
-    with register_tab:
-        st.title('Register')
-        first_name = st.text_input('Enter Your First Name:', key='first_name')
-        last_name = st.text_input('Enter Your Last Name:', key='last_name')
-        username = st.text_input('New Username:', key='reg_user')
-        password = st.text_input('New Password:', type='password', key='reg_pass')
-        if st.button('Register'):
-            if register_user(first_name, last_name, username, password):
-                st.success('You have been successfully registered! Please Login')
-                st.session_state.show_register = False
-            else:
-                st.error('⚠️ Username already exists.')
-            
-        if st.button('Back to Login'):
-            st.session_state.show_register = False
 
 
-# ----------- Show Login Tab ---------------
-elif not st.session_state.logged_in:
-    login_tab, = st.tabs(['🔑 Login'])
-    with login_tab:
-        st.title('Login')
-        username = st.text_input('Username', key='login_user')
-        password = st.text_input('Password', type='password', key='login_pass')
-        if st.button('Login'):
-            if login_user(username, password):
-                st.session_state.logged_in = True
-                st.session_state.username = username
-                users = show_users()
-                for user in users:
-                    if username == user[3]:
-                        st.success(f'Welcome {user[1]}')
-            else:
-                st.error("❌ Invalid credentials.")
-                
-        if st.button('New Register'):
-            st.session_state.show_register = True
+# ---------- Routing Content --------------
+if st.session_state.logged_in:
+    show_deshboard()
+# ----------- Show Register/Login Tab -------------
+else:
+    prototype_info()
+    if st.session_state.show_register:
+        show_register()
+    else:
+        show_login()
