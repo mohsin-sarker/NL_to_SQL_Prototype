@@ -2,7 +2,7 @@
 import streamlit as st
 from views.login_view import show_login
 from views.register_view import show_register
-from views.deshboard_view import show_deshboard
+from views.deshboard_view import show_deshboard, run_query
 from utils.reset_sesssion import reset_session
 from utils.prototype_info import prototype_info
 
@@ -44,6 +44,7 @@ if 'show_register' not in st.session_state:
 # ---------- Routing Content --------------
 if st.session_state.logged_in:
     show_deshboard()
+    
 # ----------- Show Register/Login Tab -------------
 else:
     prototype_info()
