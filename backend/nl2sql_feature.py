@@ -5,7 +5,8 @@ import os
 import streamlit as st
 
 # Creates an OpenAI client to call OpenAI API using API KEY.
-client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+# client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
 
 # Creates function to call OpenAI API with a prompt.
 def call_openai(user_prompt, model='gpt-4o'):
