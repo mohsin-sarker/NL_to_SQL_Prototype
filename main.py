@@ -2,9 +2,10 @@
 import streamlit as st
 from views.login_view import show_login
 from views.register_view import show_register
-from views.deshboard_view import show_deshboard, run_query
+from views.deshboard_view import show_deshboard
 from utils.reset_sesssion import reset_session
 from utils.prototype_info import prototype_info
+from utils.schema_tables import get_db_schema
 
 
 # --------------- Add Home Button ---------------
@@ -43,6 +44,8 @@ if 'show_register' not in st.session_state:
 
 # ---------- Routing Content --------------
 if st.session_state.logged_in:
+    with st.expander("📘 View Company's Available Tables and Columns"):
+        st.code(get_db_schema('company.db'), language='sql')
     show_deshboard()
     
 # ----------- Show Register/Login Tab -------------
