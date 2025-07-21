@@ -5,11 +5,11 @@ import os
 import streamlit as st
 
 # Creates an OpenAI client to call OpenAI API using API KEY.
-# client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
-client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
+client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+# client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
 
 # Creates function to call OpenAI API with a prompt.
-def call_openai(user_prompt, model='gpt-4o'):
+def call_openai(user_prompt, schema, model='gpt-4o'):
     """
     Calls OpenAI API to generate SQL from a natural language query using the provided schema.
     
@@ -23,7 +23,7 @@ def call_openai(user_prompt, model='gpt-4o'):
         messages=[
             {
                 'role': 'system',
-                'content': system_prompt()
+                'content': system_prompt(schema)
 
             },
             {
@@ -54,7 +54,7 @@ def nl_to_sql(query, schema_table):
         f"Table : {schema_table}\n"
         f"SQL Query :"
     )
-    sql_query = call_openai(user_prompt)
+    sql_query = call_openai(user_prompt, schema_table)
     sql_query = clean_sql_response(sql_query)
     return sql_query
 
