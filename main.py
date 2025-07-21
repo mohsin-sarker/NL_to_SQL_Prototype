@@ -3,7 +3,7 @@ import streamlit as st
 from views.login_view import show_login
 from views.register_view import show_register
 from views.deshboard_view import show_deshboard
-from utils.reset_sesssion import reset_session
+from utils.helper import reset_session
 from utils.prototype_info import prototype_info
 from utils.schema_tables import get_db_schema
 
@@ -13,8 +13,11 @@ from utils.schema_tables import get_db_schema
 nav, main = st.columns([1, 8])
 with nav:
     if st.button('🏠 Home'):
-        # Reset to default state
-        reset_session()
+        if not st.session_state.logged_in:
+            # Reset to default state
+            reset_session()
+        else:
+            st.session_state.logged_in = True
 
 # Add markdown for Home button to keep it at the top.
 st.markdown("""
@@ -44,6 +47,7 @@ if 'show_register' not in st.session_state:
 
 # ---------- Routing Content --------------
 if st.session_state.logged_in:
+    st.info("💬 *If Database is connected - Expend to View Schema Tables and Columns:*")
     with st.expander("📘 View Company's Available Tables and Columns"):
         st.code(get_db_schema('company.db'), language='sql')
     show_deshboard()
