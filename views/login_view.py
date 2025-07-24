@@ -1,10 +1,12 @@
 import streamlit as st
-from backend.auth import login
+from backend.auth import login, db_health_check
 import time
 
 # Create function to show a login view for user to be logged-in if authenticated successful.
 def show_login_view():
     login_tab, = st.tabs(['🔑 Login'])
+    st.write("🔧 Testing DB connection...")
+    db_health_check()
     
     with login_tab:
         st.title('Login')

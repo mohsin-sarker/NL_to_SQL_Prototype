@@ -60,7 +60,15 @@ def login(username, password):
     finally:
         if conn:
             conn.close()
-    
+
+
+# Database Health Check
+def db_health_check():
+    conn = get_database_connection()
+    if conn:
+        st.success("✅ Connected to database.")
+    else:
+        st.error("❌ Could not connect to database.")
 
 
 # # If user is registered and logged in, get user details.
