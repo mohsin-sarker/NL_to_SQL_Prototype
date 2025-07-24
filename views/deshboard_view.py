@@ -12,11 +12,6 @@ from utils.helper import (
 def show_deshboard():
     #Initialize Session State
     initialize_session_state()
-    
-    # Clear user input if clear_triggered
-    if st.session_state.clear_triggered:
-        st.session_state.user_query = ''
-        st.session_state.clear_triggered = False  
          
     #Placeholder for NL2SQL in Main Interface
     handle_generated_sql()
