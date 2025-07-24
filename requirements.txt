@@ -1,5 +1,9 @@
+requests 
 streamlit
+psycopg2-binary 
 bcrypt
 openai
 pandas
 faker
+boto3
+fpdf
