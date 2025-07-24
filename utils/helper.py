@@ -80,18 +80,21 @@ def handle_generated_sql():
         if query.strip() == '':
             st.warning('Please enter your question.')
         else:
-            sql = nl_to_sql(query, get_db_schema('company.db'))
-            if sql == "Tables or columns not found":
-                st.session_state.generated_sql = None
-                st.error('⚠️ The requested information is not available in your database schema.')
-            elif sql == 'Irrelevant request: Cannot generate SQL for this.':
-                st.session_state.generated_sql = None
-                st.error('⚠️ Your question is not related to database queries.')
-            else:
-                st.session_state.generated_sql = sql
-                st.success("✅ SQL query generated:")
-                st.code(sql, language='sql')
-                st.session_state.clear_triggered = True 
+            with st.spinner('Generating SQL........'):
+                generated_sql = nl_to_sql(query, get_db_schema('company.db'))
+                generated_errors = {
+                    "I can't answer that as the required tables or columns are not available.",
+                    "Your request is ambiguous. Please clarify.",
+                    "I can only handle requests related to database queries."
+                }
+                if generated_sql in generated_errors:
+                    st.error(f"⚠️ {generated_sql}")
+                    st.session_state.generated_sql = None
+                else:
+                    st.session_state.generated_sql = generated_sql
+                    st.success("✅ SQL query generated:")
+                    st.code(generated_sql, language='sql')
+                    st.session_state.clear_triggered = True 
                 
 
 # Take Actions for Generated SQL
