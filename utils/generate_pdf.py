@@ -8,7 +8,12 @@ from botocore.exceptions import BotoCoreError, NoCredentialsError
 S3_BUCKET_NAME = "participant-consent-forms"
 
 # Initialize an S3 Client
-s3_client = boto3.client('s3')
+s3_client = boto3.client(
+        's3',
+        aws_access_key_id=st.secrets["aws"]["AWS_ACCESS_KEY_ID"],
+        aws_secret_access_key=st.secrets["aws"]["AWS_SECRET_ACCESS_KEY"],
+        region_name=st.secrets["aws"]["AWS_DEFAULT_REGION"]
+    )
 
 # Generate pdf
 def generate_pdf(user):
