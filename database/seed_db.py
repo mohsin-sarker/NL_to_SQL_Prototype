@@ -3,8 +3,6 @@ from faker import Faker
 import random
 
 """
-Create users.db database to store registered users.
-    - Create users table.
 Create sample.db database for NL2SQL queries.
     - Create departments table.
     - Create employees table.
@@ -12,30 +10,6 @@ Create sample.db database for NL2SQL queries.
 """
 # -------------- Initialise Faker Object -----------
 faker = Faker()
-
-
-# --------------- Create Users Database -------------------
-def create_user_db():
-    # Create Connection to users.db database in the same directory
-    conn = sqlite3.connect("users.db")
-    cursor = conn.cursor()
-    # Create new table into users database and drop if table exists
-    cursor.execute("DROP TABLE IF EXISTS users")
-    cursor.execute("""
-        CREATE TABLE users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            first_name TEXT NOT NULL,
-            last_name TEXT NOT NULL,
-            username TEXT UNIQUE NOT NULL,
-            password TEXT NOT NULL
-        )
-        """)
-
-    conn.commit()
-    conn.close()
-    print("✅ Users database initialised and seeded successfully.")
-
-
 
 # ------------------- Create Company Database ------------------
 def create_company_db():

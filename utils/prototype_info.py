@@ -1,5 +1,4 @@
 import streamlit as st
-from backend.auth import show_users
 
 
 def prototype_info():
@@ -17,11 +16,4 @@ def prototype_info():
 
     🟢 **Your data is used for academic analysis only.**
     """)
-
-
-    # --------- For Showing All Users (Debuggin purpose) -------------
-    if st.sidebar.button("Show All Registered Users (Debug)"):
-        users = show_users()
-        st.sidebar.write("### Registered Users")
-        for user in users:
-            st.sidebar.write(f"ID: {user[0]}, Name: {user[1]} {user[2]}, Username: {user[3]}")
+ 

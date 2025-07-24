@@ -1,61 +1,79 @@
-from utils.connection import get_db_connection
+from utils.connection import get_database_connection
 from utils.hashing import hash_password, verify_password
 
 
-# Create function to register users
-def register_user(fname, lname, username, password):
-    conn = get_db_connection()
+# Create function to register users.
+def register(fname, lname, username, password):
+    # Get db connection client
+    conn = get_database_connection()
     cursor = conn.cursor()
     
     try:
+        # Create a hashed password
         hashed_pw = hash_password(password)
         cursor.execute(
             """
-            INSERT INTO users(first_name, last_name, username, password)
-            VALUES (?, ?, ?, ?)
-            """, (fname, lname, username, hashed_pw)
-        )
+            INSERT INTO users(first_name, last_name, username, password_hash)
+            VALUES (%s, %s, %s, %s)
+            """, (fname, lname, username, hashed_pw))
+        
         conn.commit()
         return True
+    
     except Exception as e:
         print(f"Error has been happend during registration: {e}")
         return False
+    
     finally:
         if conn:
             conn.close()
-            
+        
 
-# Create funcation to let user login
-def login_user(username, password):
-    conn = get_db_connection()
+
+# Create function to authenticate users to login
+def login(username, password):
+    # Get db connection client
+    conn = get_database_connection()
     cursor = conn.cursor()
     
     try:
-        cursor.execute("SELECT first_name, password FROM users WHERE username = ?", (username,))
-        result = cursor.fetchone()
-        if result:
-            fname, hashed_pw = result
+        sql = "SELECT first_name, password_hash FROM users WHERE username = %s"
+        cursor.execute(sql, (username,))
+        user = cursor.fetchone()
+        if user:
+            first_name, hashed_pw = user
             if verify_password(password, hashed_pw):
-                return fname
-            
+                return first_name
+    
     except Exception as e:
         print(f"Ops! there is a login error: {e}")
 
     finally:
         if conn:
             conn.close()
-            
+    
 
-# If users are registered, show all users
-def show_users():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    try:
-        cursor.execute("SELECT * FROM users")
-        result = cursor.fetchall()
-        return result
-    except Exception as e:
-        print(f"Error fetching users: {e}")
-        return []
-    finally:
-        conn.close()
+
+# # If user is registered and logged in, get user details.
+# def show_user_details():
+#     """
+#     Fetches and displays the details for a single, specified user.
+#     """
+#     try:
+#         user = supabase_client.auth.get_user().user
+#         if user:
+#             return {
+#                 "user_ID": user.id,
+#                 "email": user.email,
+#                 "first_name": user.user_metadata.get("first_name"),
+#                 "last_name": user.user_metadata.get("last_name"),
+#                 "created_at": user.created_at
+#             }
+#         else:
+#             print("No user is currently logged in.")
+#             return None
+        
+#     except Exception as e:
+#         print(f"An error occurred while fetching user details: {e}")
+#         return None
+        
