@@ -1,11 +1,16 @@
 from utils.connection import get_database_connection
 from utils.hashing import hash_password, verify_password
+import streamlit as st
 
 
 # Create function to register users.
 def register(fname, lname, username, password):
     # Get db connection client
     conn = get_database_connection()
+    if conn is None:
+        print("❌ No DB connection.")
+        st.info("❌ No DB connection.")
+        return None
     cursor = conn.cursor()
     
     try:
@@ -34,6 +39,10 @@ def register(fname, lname, username, password):
 def login(username, password):
     # Get db connection client
     conn = get_database_connection()
+    if conn is None:
+        print("❌ No DB connection.")
+        st.info("❌ No DB connection.")
+        return None
     cursor = conn.cursor()
     
     try:
