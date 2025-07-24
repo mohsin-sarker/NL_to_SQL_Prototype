@@ -1,8 +1,9 @@
 import streamlit as st
-from backend.auth import login_user
+from backend.auth import login
+import time
 
-# Create function to show a login view for user to be logged-in
-def show_login():
+# Create function to show a login view for user to be logged-in if authenticated successful.
+def show_login_view():
     login_tab, = st.tabs(['🔑 Login'])
     
     with login_tab:
@@ -11,14 +12,16 @@ def show_login():
         password = st.text_input('Password', type='password', key='login_pass')
         
         if st.button('Login'):
-            user_first_name = login_user(username, password)
+            user_first_name = login(username, password)
             if user_first_name:
+                st.session_state.user = user_first_name
                 st.session_state.logged_in = True
-                st.session_state.username = username
                 st.success(f'Welcome {user_first_name}')
+                st.balloons()
+                time.sleep(2)
                 st.rerun()
             else:
-                st.error("❌ Invalid credentials.")
+                st.error("❌ Login failed: Invalid username or password.")
                 
         if st.button('New Register'):
             st.session_state.show_register = True

@@ -1,5 +1,6 @@
 import sqlite3
 import os
+import psycopg2
 
 
 # Get the current directory of this script and initialize the database path
@@ -13,4 +14,20 @@ def get_db_connection(db_name="users.db"):
         return conn
     except sqlite3.Error as e:
         print(f"An Error has been happend to connect to the database!: {e}")
+        return None
+
+
+def get_database_connection():
+    """Establishes a connection to the AWS RDS database."""
+    try:
+        conn = psycopg2.connect(
+            host="nl2sql-prototype-app.cjywqomgoqt8.eu-west-2.rds.amazonaws.com",
+            port=5432,
+            dbname="nl2sql_db",
+            user="postgres",
+            password="Koly1989"
+        )
+        return conn
+    except Exception as e:
+        print(f"Error connecting to the database: {e}")
         return None
