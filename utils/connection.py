@@ -22,11 +22,11 @@ def get_database_connection():
     """Establishes a connection to the AWS RDS database."""
     try:
         conn = psycopg2.connect(
-            host=st.secrets('DB_HOST'),
-            port=st.secrets('DB_PORT'),
-            dbname=st.secrets('DB_NAME'),
-            user=st.secrets('DB_USER'),
-            password=st.secrets('DB_PASSWORD')
+            host=st.secrets["DB_HOST"],
+            port=st.secrets["DB_PORT"],
+            dbname=st.secrets["DB_NAME"],
+            user=st.secrets["DB_USER"],
+            password=st.secrets["DB_PASSWORD"]
         )
         return conn
     except Exception as e:
