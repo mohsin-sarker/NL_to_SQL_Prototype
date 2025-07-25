@@ -3,10 +3,16 @@
 A prototype application which is deployed on Streamlit Community Cloud that transforms **natural language** into **SQL queries**, allowing users to explore a company's database using everyday English.
 
 ---
-## App Login Screenshot
-![App Login-Demo](assests/login.png)
 
-## App Dashboard Screenshot
+### 🚀 Live Demo (Temporary)
+
+[Click here to try the app!](https://nl2sql-prototype.streamlit.app/)
+
+---
+## App Login Screenshot
+![App Login-Demo](assests/login.png)(https://nl2sql-prototype.streamlit.app/)
+
+## App Dashboard Screenshot (Once Logged-in)
 ![App Dashboard-Demo](assests/dashboard.png)
 
 ---
