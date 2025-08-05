@@ -1,0 +1,152 @@
+[
+    {
+      "id": 1,
+      "question": "List all department names.",
+      "expected_sql": "SELECT name FROM departments;"
+    },
+    {
+      "id": 2,
+      "question": "Show all employees' first and last names.",
+      "expected_sql": "SELECT first_name, last_name FROM employees;"
+    },
+    {
+      "id": 3,
+      "question": "Get the total sales amount.",
+      "expected_sql": "SELECT SUM(amount) FROM sales;"
+    },
+    {
+      "id": 4,
+      "question": "Show all employees in the marketing department.",
+      "expected_sql": "SELECT e.first_name, e.last_name FROM employees e INNER JOIN departments d ON e.department_id = d.id WHERE LOWER(d.name) = 'marketing';"
+    },
+    {
+      "id": 5,
+      "question": "List all employees who made sales last month.",
+      "expected_sql": "SELECT DISTINCT e.first_name, e.last_name FROM employees e INNER JOIN sales s ON e.id = s.employee_id WHERE strftime('%Y-%m', s.sale_date) = strftime('%Y-%m', 'now', '-1 month');"
+    },
+    {
+      "id": 6,
+      "question": "Which employee made the highest total sales?",
+      "expected_sql": "SELECT e.first_name, e.last_name, SUM(s.amount) AS total_sales FROM employees e INNER JOIN sales s ON e.id = s.employee_id GROUP BY e.id ORDER BY total_sales DESC LIMIT 1;"
+    },
+    {
+      "id": 7,
+      "question": "What is the average sale amount?",
+      "expected_sql": "SELECT AVG(amount) FROM sales;"
+    },
+    {
+      "id": 8,
+      "question": "List departments with more than 5 employees.",
+      "expected_sql": "SELECT d.name FROM departments d INNER JOIN employees e ON d.id = e.department_id GROUP BY d.id HAVING COUNT(e.id) > 5;"
+    },
+    {
+      "id": 9,
+      "question": "Show employee addresses from the sales department.",
+      "expected_sql": "SELECT e.address FROM employees e INNER JOIN departments d ON e.department_id = d.id WHERE LOWER(d.name) = 'sales';"
+    },
+    {
+      "id": 10,
+      "question": "List sales amounts and dates for all employees.",
+      "expected_sql": "SELECT e.first_name, e.last_name, s.amount, s.sale_date FROM employees e INNER JOIN sales s ON e.id = s.employee_id;"
+    },
+    {
+      "id": 11,
+      "question": "Show total sales for each department.",
+      "expected_sql": "SELECT d.name, SUM(s.amount) AS total_sales FROM departments d INNER JOIN employees e ON d.id = e.department_id INNER JOIN sales s ON e.id = s.employee_id GROUP BY d.name;"
+    },
+    {
+      "id": 12,
+      "question": "How many sales were made this month?",
+      "expected_sql": "SELECT COUNT(*) FROM sales WHERE strftime('%Y-%m', sale_date) = strftime('%Y-%m', 'now');"
+    },
+    {
+      "id": 13,
+      "question": "Find all employees without a department.",
+      "expected_sql": "SELECT first_name, last_name FROM employees WHERE department_id IS NULL;"
+    },
+    {
+      "id": 14,
+      "question": "What are the first and last names of all employees?",
+      "expected_sql": "SELECT first_name, last_name FROM employees;"
+    },
+    {
+      "id": 15,
+      "question": "Show departments and the number of employees in each.",
+      "expected_sql": "SELECT d.name, COUNT(e.id) AS employee_count FROM departments d LEFT JOIN employees e ON d.id = e.department_id GROUP BY d.id;"
+    },
+    {
+      "id": 16,
+      "question": "Find sales greater than 1000.",
+      "expected_sql": "SELECT amount, sale_date FROM sales WHERE amount > 1000;"
+    },
+    {
+      "id": 17,
+      "question": "List employees who haven't made any sales.",
+      "expected_sql": "SELECT e.first_name, e.last_name FROM employees e LEFT JOIN sales s ON e.id = s.employee_id WHERE s.id IS NULL;"
+    },
+    {
+      "id": 18,
+      "question": "Get employee names who made sales over 500 last month.",
+      "expected_sql": "SELECT DISTINCT e.first_name, e.last_name FROM employees e INNER JOIN sales s ON e.id = s.employee_id WHERE s.amount > 500 AND strftime('%Y-%m', s.sale_date) = strftime('%Y-%m', 'now', '-1 month');"
+    },
+    {
+      "id": 19,
+      "question": "Get the number of departments.",
+      "expected_sql": "SELECT COUNT(*) FROM departments;"
+    },
+    {
+      "id": 20,
+      "question": "List all employees with their departments.",
+      "expected_sql": "SELECT e.first_name, e.last_name, d.name AS department FROM employees e INNER JOIN departments d ON e.department_id = d.id;"
+    },
+    {
+      "id": 21,
+      "question": "Show total sales per employee.",
+      "expected_sql": "SELECT e.first_name, e.last_name, SUM(s.amount) AS total_sales FROM employees e INNER JOIN sales s ON e.id = s.employee_id GROUP BY e.id;"
+    },
+    {
+      "id": 22,
+      "question": "Which department had the most sales?",
+      "expected_sql": "SELECT d.name, SUM(s.amount) AS total_sales FROM departments d INNER JOIN employees e ON d.id = e.department_id INNER JOIN sales s ON e.id = s.employee_id GROUP BY d.id ORDER BY total_sales DESC LIMIT 1;"
+    },
+    {
+      "id": 23,
+      "question": "Show employees and their total sales, ordered by highest first.",
+      "expected_sql": "SELECT e.first_name, e.last_name, SUM(s.amount) AS total_sales FROM employees e INNER JOIN sales s ON e.id = s.employee_id GROUP BY e.id ORDER BY total_sales DESC;"
+    },
+    {
+      "id": 24,
+      "question": "What are the employee names and addresses?",
+      "expected_sql": "SELECT first_name, last_name, address FROM employees;"
+    },
+    {
+      "id": 25,
+      "question": "Get the total number of employees.",
+      "expected_sql": "SELECT COUNT(*) FROM employees;"
+    },
+    {
+      "id": 26,
+      "question": "Get all sales on July 1st, 2024.",
+      "expected_sql": "SELECT * FROM sales WHERE strftime('%Y-%m-%d', sale_date) = '2024-07-01';"
+    },
+    {
+      "id": 27,
+      "question": "Show all departments without employees.",
+      "expected_sql": "SELECT d.name FROM departments d LEFT JOIN employees e ON d.id = e.department_id WHERE e.id IS NULL;"
+    },
+    {
+      "id": 28,
+      "question": "List each employee and the number of sales they made.",
+      "expected_sql": "SELECT e.first_name, e.last_name, COUNT(s.id) AS sale_count FROM employees e LEFT JOIN sales s ON e.id = s.employee_id GROUP BY e.id;"
+    },
+    {
+      "id": 29,
+      "question": "Show employees who made sales in 2023.",
+      "expected_sql": "SELECT DISTINCT e.first_name, e.last_name FROM employees e INNER JOIN sales s ON e.id = s.employee_id WHERE strftime('%Y', s.sale_date) = '2023';"
+    },
+    {
+      "id": 30,
+      "question": "Find the top 5 employees with the highest number of sales.",
+      "expected_sql": "SELECT e.first_name, e.last_name, COUNT(s.id) AS sale_count FROM employees e INNER JOIN sales s ON e.id = s.employee_id GROUP BY e.id ORDER BY sale_count DESC LIMIT 5;"
+    }
+  ]
