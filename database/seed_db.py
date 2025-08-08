@@ -95,7 +95,6 @@ def create_company_db():
 
 # ------------- Seed Everything -----------------
 def seed():
-    create_user_db()
     create_company_db()
     print("✅ Database created and seeded successfully.")
 
