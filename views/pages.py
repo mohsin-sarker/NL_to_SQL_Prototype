@@ -1,7 +1,7 @@
 import streamlit as st
 import time
 from utils.generate_pdf import upload_consent_form
-from backend.save_feedback import save_feedback
+from views.feedback_view import feedback_view
 
 
 def show_consent_page():
@@ -59,21 +59,11 @@ participant_info = [
 
 
 def show_questionnaire_page():
-    st.subheader("🧠 User Feedback Questionnaire")
-    question_1 = st.radio("1. Was the SQL output accurate?", ["Yes", "No", "Partially"])
-    question_2 = st.slider("2. Rate your overall experience:", 1, 5)
-    question_3 = st.text_area("3. Any suggestions or issues you faced?")
-    
-    if st.button("Submit"):
-        save_feedback(
-            {
-                "username": st.session_state.user,
-                "question_1": question_1,
-                "question_2": question_2,
-                "question_3": question_3,
-            }
-        )
+    username = st.session_state.user
+    if feedback_view(username):
         st.success("Thank you for your feedback!")
+        st.balloons()
+        time.sleep(3)
         st.session_state.page = 'thankyou'
         st.rerun()
         
