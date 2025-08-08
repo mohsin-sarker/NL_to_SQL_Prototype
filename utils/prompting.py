@@ -43,24 +43,29 @@ def system_prompt(schema: str) -> str:
         3. ✅ **Joins**
         - Use `INNER JOIN` based on the table relationships defined above.
         - Always use the proper ON condition to connect tables via foreign keys.
+        
+        4. ✅ **Column Aliasing for Uniqueness**
+        - Always alias duplicate or common column names with descriptive names like:
+          - `e.id AS employee_id`, `d.id AS department_id`, etc.
+        - This ensures result columns are unambiguous and prevents runtime errors.
 
-        4. ✅ **Filtering and Case Sensitivity**
+        5. ✅ **Filtering and Case Sensitivity**
         - Use `LOWER(column) = 'value'` or `LIKE '%value%'` for case-insensitive text matching.
         - Do not use `ILIKE` or `COLLATE "C"` (not supported in SQLite).
 
-        5. ✅ **Date Filtering**
+        6. ✅ **Date Filtering**
         - Use `strftime('%Y-%m', date_column)` or `strftime('%Y-%m-%d', date_column)` for filtering by month or date.
         - For filtering "last month", use:
         `strftime('%Y-%m', date_column) = strftime('%Y-%m', 'now', '-1 month')`
 
-        6. ✅ **Aggregations**
+        7. ✅ **Aggregations**
         - Use `SUM()`, `COUNT()`, `AVG()`, etc., when user asks for totals or statistics.
         - Always include appropriate `GROUP BY` when using aggregation.
 
-        7. ✅ **Ordering**
+        8. ✅ **Ordering**
         - Use `ORDER BY` to sort results. Typically use descending order for totals (e.g., `ORDER BY total_sales DESC`).
 
-        8. ✅ **Formatting**
+        9. ✅ **Formatting**
         - Output should be clean, readable SQL — multi-line, properly indented.
         - Return ONLY the SQL query. No comments, markdown, or explanations.
 
