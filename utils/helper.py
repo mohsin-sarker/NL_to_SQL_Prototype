@@ -74,8 +74,8 @@ def get_sidebar():
 
 # Create function to get query input from users
 def handle_generated_sql():
-    st.markdown("💬 *Enter your natural language query below:*")
     get_query_examples() #Show some example queries
+    st.markdown("💬 *Enter your natural language query below:*")
     query = st.text_input("Your question:", value=st.session_state.user_query, key='user_query_input')
     st.session_state.user_query = query
     if st.button('Generate SQL'):
