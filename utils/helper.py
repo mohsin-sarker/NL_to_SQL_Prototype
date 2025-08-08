@@ -2,7 +2,6 @@ import streamlit as st
 import json
 from backend.nl2sql_feature import nl_to_sql
 from utils.schema_tables import get_db_schema
-from utils.helper import get_query_examples
 
 
 # Updates session state for logged_in user, pages, and register view
