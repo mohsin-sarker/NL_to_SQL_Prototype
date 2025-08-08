@@ -1,4 +1,5 @@
 import streamlit as st
+import json
 from backend.nl2sql_feature import nl_to_sql
 from utils.schema_tables import get_db_schema
 
@@ -129,14 +130,18 @@ def logout_feedback_handler():
             st.rerun()
 
 
-# Get Viewer Details on the Sidebar
-# def user_details():
-#     with st.sidebar.expander("View User Details"):
-#         user = st.session_state.user
-#         if user:
-#             st.markdown(f"**User ID:** {user.id}")
-#             st.markdown(f"**Name:** {user.user_metadata.get('first_name')} {user.user_metadata.get('last_name')}")
-#             st.markdown(f"Email:** {user.email}")
-#             st.markdown(f"**Joined At:** {user.created_at}")
-#         else:
-#             st.info("No user is currently logged in!")
+# Create an example query function
+def get_query_examples():
+    query_file_path = 'evaluation/evaluation_sets.json'
+    try:
+        with open(query_file_path, 'r') as file:
+            data = json.load(file)
+            questons = [question['question'] for question in data]
+            with st.expander("🧾 See Example Questions You Can Try", expanded=False):
+                st.markdown("Here are a few examples to help you get started:")
+                for i, q in enumerate(questons[:10]):
+                    st.markdown(f"- **{q}**")
+                    
+    except Exception as e:
+        st.error(f'Failed to load examples: {e}')
+        return []
