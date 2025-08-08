@@ -4,10 +4,10 @@ import psycopg2
 import streamlit as st
 
 
-# Get the current directory of this script and initialize the database path
+# # Get the current directory of this script and initialize the database path
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Create and return a connection to SQLite database.
+# # Create and return a connection to SQLite database.
 def get_db_connection(db_name="users.db"):
     try:
         db_path = os.path.join(base_dir, "database", db_name)
@@ -18,6 +18,7 @@ def get_db_connection(db_name="users.db"):
         return None
 
 
+# Get Connection to PostgreSQL database for users and user_feedback
 def get_database_connection():
     """Establishes a connection to the AWS RDS database."""
     try:
