@@ -112,5 +112,3 @@ def feedback_view(username):
             else:
                 st.error("❌ Something went wrong or you may have already submitted. Please try again later.")
                 return False
-
-feedback_view('Mohsin')
