@@ -5,53 +5,67 @@ def feedback_view(username):
     st.subheader("🧠 NL2SQL Prototype – User Feedback Form")
 
     with st.form("feedback_form"):
-        # SECTION 1: ABOUT YOU
+        # User Background
         st.subheader("👤 User Background")
         role = st.text_input("What is your job title or role?")
-        sql_experience = st.selectbox("Do you have experience with SQL?", ["None", "Beginner", "Intermediate", "Expert"])
-        db_usage = st.selectbox("How often do you work with databases?", ["Never", "Occasionally", "Frequently", "Daily"])
-        ai_familiarity = st.radio("Have you used natural language AI tools before (e.g., ChatGPT)?", ["Yes", "No"])
+        sql_db_experience = st.slider(
+            "What is your experience with SQL and database usage? (0 = none, 10 = expert & daily use)",
+            0, 10, 0
+        )
+        ai_tools_used = st.radio("Have you used natural language AI tools before (e.g., ChatGPT)?", ["Yes", "No"])
 
-        # SECTION 2: SYSTEM USABILITY
+        # Usability
         st.subheader("🧩 Usability")
-        ui_ease = st.slider("How easy was it to use the system?", 1, 5)
-        system_response_time = st.slider("Was the system's response time acceptable?", 1, 5)
-        layout_friendliness = st.slider("Is the layout intuitive and easy to navigate?", 1, 5)
+        ease_of_use = st.slider("How easy was it to use the system?", 0, 10, 0)
+        response_time = st.slider("Was the system's response time acceptable?", 0, 10, 0)
+        layout_intuitiveness = st.slider("Is the layout intuitive and easy to navigate?", 0, 10, 0)
 
-        # SECTION 3: QUERYING WITH NATURAL LANGUAGE
+        # Natural Language Querying
         st.subheader("💬 Natural Language Querying")
-        nl_query_ease = st.slider("Was it easy to express your query in natural language?", 1, 5)
-        nl_understood = st.slider("Did the system understand your intent?", 1, 5)
-        sql_match_intent = st.slider("Did the generated SQL match your intended question?", 1, 5)
-        used_sql_output = st.radio("Did you examine or use the SQL output provided?", ["Yes", "No"])
+        query_expression = st.slider("Was it easy to express your query in natural language?", 0, 10, 0)
+        intent_understanding = st.slider("Did the system understand your intent accurately?", 0, 10, 0)
+        sql_match_intent = st.slider("Did the generated SQL match your intended question?", 0, 10, 0)
+        sql_output_used = st.radio("Did you examine or use the SQL output provided?", ["Yes", "No"])
 
-        # SECTION 4: ACCURACY & RESULTS
+        # Accuracy of Results
         st.subheader("📊 Accuracy of Results")
-        output_accuracy = st.slider("Were the results accurate and relevant?", 1, 5)
-        sql_understandability = st.slider("Was the SQL readable and understandable to you?", 1, 5)
-        query_failures = st.text_area("If results were incorrect, what went wrong?")
+        result_accuracy = st.slider("Were the results accurate and relevant?", 0, 10, 0)
+        sql_readability = st.slider("Was the SQL readable and understandable to you?", 0, 10, 0)
+        error_description = st.text_area("If results were incorrect, what went wrong?")
 
-        # SECTION 5: LEARNING & INSIGHTS
+        # Learning & Insights
         st.subheader("📘 Learning & Insights")
-        learn_from_sql = st.slider("Did the SQL output help you learn or validate your understanding?", 1, 5)
-        insights_gained = st.slider("Did the tool help you discover insights from the data?", 1, 5)
+        learning_help = st.slider("Did the SQL output help you learn or validate your understanding?", 0, 10, 0)
+        insight_discovery = st.slider("Did the tool help you discover insights from the data?", 0, 10, 0)
 
-        # SECTION 6: OVERALL EXPERIENCE
+        # Algorithm Performance
+        st.subheader("⚙️ Algorithm Performance")
+        algorithm_efficiency = st.slider("How efficient was the SQL generation process?", 0, 10, 0)
+        alt_algorithms = st.radio("Would you like to see alternative NLP-to-SQL algorithms?", ["Yes", "No", "Maybe"])
+        alt_algorithm_suggestions = st.text_area("If yes, which algorithms or approaches would you suggest?")
+
+        # Analytics Capabilities
+        st.subheader("📈 Analytics Capabilities")
+        analytics_support = st.slider("How well did the system support analytics (e.g., filtering, grouping, summarizing)?", 0, 10, 0)
+        analytics_usefulness = st.slider("Were the analytical outputs useful for decision-making?", 0, 10, 0)
+        viz_quality = st.slider("Did the system provide meaningful visualizations or summaries?", 0, 10, 0)
+        analytics_improvements = st.text_area("What analytics features would you like to see improved or added?")
+
+        # Overall Experience
         st.subheader("🌟 Overall Experience")
-        enjoyment = st.slider("Did you enjoy using the tool?", 1, 5)
-        reuse = st.radio("Would you use this tool again in the future?", ["Yes", "No", "Maybe"])
-        recommendation = st.slider("Would you recommend this tool to others?", 1, 5)
+        enjoyment = st.slider("Did you enjoy using the tool?", 0, 10, 0)
+        reuse_intent = st.radio("Would you use this tool again in the future?", ["Yes", "No", "Maybe"])
+        recommend_score = st.slider("Would you recommend this tool to others?", 0, 10, 0)
 
-        # SECTION 7: AI SYSTEM EXPERIENCE
+        # AI System Experience
         st.subheader("🤖 AI System Experience")
-        aware_of_ai = st.radio("Were you aware that the system is powered by AI?", ["Yes", "No"])
-        ai_limitations = st.slider("Were you aware that AI can sometimes generate incorrect results?", 1, 5)
-        ai_confidence = st.slider("How confident were you in the AI’s understanding of your query?", 1, 5)
-        trust_feedback = st.text_area("What would increase your trust in AI-generated SQL or results?")
+        aware_ai = st.radio("Were you aware that the system is powered by AI?", ["Yes", "No"])
+        aware_ai_inaccuracy = st.slider("Were you aware that AI can sometimes generate incorrect results?", 0, 10, 0)
+        ai_confidence = st.slider("How confident were you in the AI’s understanding of your query?", 0, 10, 0)
+        trust_suggestions = st.text_area("What would increase your trust in AI-generated SQL or results?")
 
-        # SECTION 8: FINAL COMMENTS
+        # Final Thoughts
         st.subheader("💡 Final Thoughts")
-        feature_requests = st.text_area("What features would you like to see added?")
         other_comments = st.text_area("Any other comments or suggestions?")
 
         submitted = st.form_submit_button("Submit Feedback")
@@ -59,29 +73,34 @@ def feedback_view(username):
         feedback_data = {
             "username": username,
             "role": role,
-            "sql_experience": sql_experience,
-            "db_usage": db_usage,
-            "ai_familiarity": ai_familiarity,
-            "ui_ease": ui_ease,
-            "system_response_time": system_response_time,
-            "layout_friendliness": layout_friendliness,
-            "nl_query_ease": nl_query_ease,
-            "nl_understood": nl_understood,
+            "sql_db_experience": sql_db_experience,
+            "ai_tools_used": ai_tools_used,
+            "ease_of_use": ease_of_use,
+            "response_time": response_time,
+            "layout_intuitiveness": layout_intuitiveness,
+            "query_expression": query_expression,
+            "intent_understanding": intent_understanding,
             "sql_match_intent": sql_match_intent,
-            "used_sql_output": used_sql_output,
-            "output_accuracy": output_accuracy,
-            "sql_understandability": sql_understandability,
-            "query_failures": query_failures,
-            "learn_from_sql": learn_from_sql,
-            "insights_gained": insights_gained,
+            "sql_output_used": sql_output_used,
+            "result_accuracy": result_accuracy,
+            "sql_readability": sql_readability,
+            "error_description": error_description,
+            "learning_help": learning_help,
+            "insight_discovery": insight_discovery,
+            "algorithm_efficiency": algorithm_efficiency,
+            "alt_algorithms": alt_algorithms,
+            "alt_algorithm_suggestions": alt_algorithm_suggestions,
+            "analytics_support": analytics_support,
+            "analytics_usefulness": analytics_usefulness,
+            "viz_quality": viz_quality,
+            "analytics_improvements": analytics_improvements,
             "enjoyment": enjoyment,
-            "reuse": reuse,
-            "recommendation": recommendation,
-            "aware_of_ai": aware_of_ai,
-            "ai_limitations": ai_limitations,
+            "reuse_intent": reuse_intent,
+            "recommend_score": recommend_score,
+            "aware_ai": aware_ai,
+            "aware_ai_inaccuracy": aware_ai_inaccuracy,
             "ai_confidence": ai_confidence,
-            "trust_feedback": trust_feedback,
-            "feature_requests": feature_requests,
+            "trust_suggestions": trust_suggestions,
             "other_comments": other_comments
         }
 
@@ -93,3 +112,5 @@ def feedback_view(username):
             else:
                 st.error("❌ Something went wrong or you may have already submitted. Please try again later.")
                 return False
+
+feedback_view('Mohsin')
