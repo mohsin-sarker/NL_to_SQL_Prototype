@@ -4,8 +4,8 @@ from utils.connection import get_database_connection
 def save_feedback_to_db(feedback_data):
     """
     This function is to store users feedback for further analysis.
-    Connect to your PostgreSQL DB.
-    Create table if not exists.
+    Connect to the PostgreSQL DB.
+    Create user_feedback table if not exists.
     Prepare the INSERT query dynamically.
     """
     
@@ -18,32 +18,37 @@ def save_feedback_to_db(feedback_data):
             CREATE TABLE IF NOT EXISTS user_feedback (
                 id SERIAL PRIMARY KEY,
                 username TEXT UNIQUE,
+                submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 role TEXT,
-                sql_experience TEXT,
-                db_usage TEXT,
-                ai_familiarity TEXT,
-                ui_ease INTEGER,
-                system_response_time INTEGER,
-                layout_friendliness INTEGER,
-                nl_query_ease INTEGER,
-                nl_understood INTEGER,
+                sql_db_experience INTEGER,
+                ai_tools_used TEXT,
+                ease_of_use INTEGER,
+                response_time INTEGER,
+                layout_intuitiveness INTEGER,
+                query_expression INTEGER,
+                intent_understanding INTEGER,
                 sql_match_intent INTEGER,
-                used_sql_output TEXT,
-                output_accuracy INTEGER,
-                sql_understandability INTEGER,
-                query_failures TEXT,
-                learn_from_sql INTEGER,
-                insights_gained INTEGER,
+                sql_output_used TEXT,
+                result_accuracy INTEGER,
+                sql_readability INTEGER,
+                error_description TEXT,
+                learning_help INTEGER,
+                insight_discovery INTEGER,
+                algorithm_efficiency INTEGER,
+                alt_algorithms TEXT,
+                alt_algorithm_suggestions TEXT,
+                analytics_support INTEGER,
+                analytics_usefulness INTEGER,
+                viz_quality INTEGER,
+                analytics_improvements TEXT,
                 enjoyment INTEGER,
-                reuse TEXT,
-                recommendation INTEGER,
-                aware_of_ai TEXT,
-                ai_limitations INTEGER,
+                reuse_intent TEXT,
+                recommend_score INTEGER,
+                aware_ai TEXT,
+                aware_ai_inaccuracy INTEGER,
                 ai_confidence INTEGER,
-                trust_feedback TEXT,
-                feature_requests TEXT,
-                other_comments TEXT,
-                submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                trust_suggestions TEXT,
+                other_comments TEXT
             );
         """)
         
