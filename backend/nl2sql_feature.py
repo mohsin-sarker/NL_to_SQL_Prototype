@@ -20,6 +20,8 @@ def call_openai(user_prompt, schema, model='gpt-4o'):
     """
     response = client.chat.completions.create(
         model=model,
+        temperature=0,
+        top_p=1,
         messages=[
             {
                 'role': 'system',

@@ -10,11 +10,11 @@ schema = get_db_schema('company.db')
 # Get connection
 conn = get_db_connection('company.db')
 
-with open('evalution_sets.json', 'r') as f:
-    evalution_data = json.load(f)
+with open('evaluation_sets.json', 'r') as f:
+    evaluation_data = json.load(f)
         
 # Initialise total, correct, and mismatches count
-total = len(evalution_data)
+total = len(evaluation_data)
 correct = 0
 
 
@@ -26,7 +26,7 @@ def normalize_df(df):
 
 
 # Evaluation loop
-for i, entry in enumerate(evalution_data, 1):
+for i, entry in enumerate(evaluation_data, 1):
     question = entry['question']
     expected_sql = entry['expected_sql']
     
